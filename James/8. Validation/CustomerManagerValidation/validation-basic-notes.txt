@@ -1,0 +1,46 @@
+<!--        bổ sung 2 thư viện để làm việc với validation: validation-api và hibernate-validator -->
+<dependency>
+    <groupId>javax.validation</groupId>
+    <artifactId>validation-api</artifactId>
+    <version>2.0.1.Final</version>
+</dependency>
+<dependency>
+    <groupId>org.hibernate.validator</groupId>
+    <artifactId>hibernate-validator</artifactId>
+    <version>6.2.0.Final</version>
+</dependency>
+
+
+### Phân biệt @NotBlank và @NotEmpty:
+@NotBlank: // không được trống và ko được chứa khoảng trắng. Áp dụng cho String
+@NotEmpty: // không được trống và ko được chứa khoảng trắng. Áp dụng cho List, String, Map
+
+
+### Phân biệt @Valid và @Validated
+- Cả 2 đều dùng để kích hoạt việc kiểm tra đối tượng
+- @Valid: thì CÓ THỂ kích hoạt validate ở tầng model có các đối tượng lồng đối tương
+- @Validated: chỉ kích hoạt validate ở Controller
+public class Customer {
+//    @Validated            để Validated là sai, vì validated chỉ kích hoạt validate ở Controller
+    @Valid
+    private CustomerType customerType;
+}
+- @Valid thuộc packages: javax.validation.Valid;
+- @Validated thuộc packages: org.springframework.validation.annotation.Validated
+
+
+###
+public String save(@Validated @ModelAttribute(name = "customer") Customer customer, Model model,BindingResult bindingResult)
+// Để BindingResult bindingResult gần model customer thì ĐÚNG để xa thì sai
+public String save(@Validated @ModelAttribute(name = "customer") Customer customer,BindingResult bindingResult, Model model)
+
+
+
+
+
+
+
+
+### Tự CUSTOM VALIDATION
+Phải dùng thư viện của spring: import org.springframework.validation.Validator;
+Dùng thằng này sai: import javax.validation.Validator;

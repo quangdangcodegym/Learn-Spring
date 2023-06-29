@@ -1,0 +1,25 @@
+
+-- Cách gắn link vào thymeleaf 
+<a th:href="@{/customers/{id}/edit(id=${cus.getId()})}"><i class="ion ion-md-trash"></i></a>
+<a th:href="@{/customers/__${cus.getId()}__/delete}"><i class="ion ion-md-build"></i></a>
+
+
+-- truyền tham số vào fragment
+<th:block th:replace="~{dashboard/layout/js_footer::css_footer(1,'index')}"></th:block>
+
+<th:block th:fragment="css_footer(id,page)">
+    <!-- Vendor js -->
+    <script src="/dashboard/assets\js\vendor.min.js"></script>
+
+    <script th:if="${page == 'index'}" src="/dashboard/assets\libs\morris-js\morris.min.js"></script>
+    <script th:if="${page == 'index'}" src="/dashboard/assets\libs\raphael\raphael.min.js"></script>
+
+    <script th:if="${page == 'index'}" src="/dashboard/assets\js\pages\dashboard.init.js"></script>
+
+    <!-- App js -->
+    <script src="/dashboard/assets\js\app.min.js"></script>
+</th:block>
+
+
+
+

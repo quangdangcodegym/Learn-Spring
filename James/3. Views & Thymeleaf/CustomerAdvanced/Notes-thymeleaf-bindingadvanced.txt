@@ -1,0 +1,77 @@
+th:object="${customer}"
+th:field="*{id}"        // tự generate ra 3 trường id, name, value
+th:value="${customer.getCustomerType()!= null} ? ${customer.getCustomerType().getId()}"
+// th:value ="một value" và (if) ? (then)
+th:selected="${customer.getCustomerType()!= null && ct.getId() == customer.getCustomerType().getId()} ? true"
+// th:selected = "một giá trị true/false"
+
+th:each="ct,st : ${customerTypes}" th:text="${ct.getName()}"
+ct: biến item
+st: biến trạng thái của vòng lặp
+
+Vì thư mục của view hiện tại là /WEB-INF/views
+nên chỉ cần layout :: footer, hoặc / là có thể đi vào các thư mục con
+<footer th:replace="layout :: footer"></footer>
+<footer th:replace="/layout :: footer"></footer>
+
+
+<div>
+    <label>Customer types</label>
+    <select th:field="*{customerType.id}">
+        <option  th:each="ct : ${customerTypes}" th:text="${ct.getName()}" th:value="${ct.getId()}"></option>
+    </select>
+</div>
+// ở trường customer type để th:field="*{customerType.id}" => chú ý vì sao lại để vì nó sẽ generate ra field name: "customerType.id"
+
+
+### CẤU HÌNH POM
+<dependencies>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>4.0.1</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>5.3.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>5.3.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+            <version>5.3.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>5.3.5</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>5.3.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.thymeleaf</groupId>
+            <artifactId>thymeleaf-spring5</artifactId>
+            <version>3.0.15.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>nz.net.ultraq.thymeleaf</groupId>
+            <artifactId>thymeleaf-layout-dialect</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+
+    </dependencies>
+
+
+
+

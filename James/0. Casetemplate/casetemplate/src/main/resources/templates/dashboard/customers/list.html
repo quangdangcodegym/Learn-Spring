@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Dashboard 1 | Zircos - Responsive Bootstrap 4 Admin Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Responsive bootstrap 4 admin template" name="description">
+        <meta content="Coderthemes" name="author">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <th:block th:replace="/dashboard/layout/css_head::css_head"></th:block>
+    </head>
+
+    <body data-layout="horizontal">
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            <!-- Navigation Bar-->
+                <th:block th:replace="/dashboard/layout/top_nav::top_nav"></th:block>
+                <!-- End Navigation Bar-->
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+
+                        <!-- start page title -->
+                        <div class="row">
+                            <table class="table table-hover table-centered m-0">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>User Name</th>
+                                    <th>Email</th>
+                                    <th>Address</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+
+                                </tr>
+                                <tr th:each="cus : ${customers}" >
+                                    <th>
+                                        <img src="/dashboard/assets\images\users\avatar-1.jpg" alt="user" class="avatar-sm rounded-circle">
+                                    </th>
+                                    <td th:text="${cus.getName()}"></td>
+                                    <td th:text="${cus.email}">+12 3456 789</td>
+                                    <td th:text="${cus.address}">USA</td>
+                                    <td>
+                                        <a th:href="@{/customers/{id}/edit(id=${cus.getId()})}"><i class="ion ion-md-build"></i></a>
+                                        <a th:href="@{/customers/__${cus.getId()}__/delete}"><i class="ion ion-md-trash"></i></a>
+
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end page title -->
+
+
+                    </div>
+                    <!-- end container-fluid -->
+
+                </div>
+                <!-- end content -->
+
+                
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                2018 - 2020 &copy; Zircos theme by <a href="">Coderthemes</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+        </div>
+        <!-- END wrapper -->
+
+        <th:block th:replace="/dashboard/layout/right_bar::right_bar"></th:block>
+
+        <th:block th:replace="~{dashboard/layout/js_footer::css_footer(1,'customers.list')}"></th:block>
+
+    </body>
+
+</html>

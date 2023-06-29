@@ -1,0 +1,29 @@
+Dự án spring cơ bản: model view controller thì chỉ cần
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-thymeleaf</artifactId>
+</dependency>
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+
+
+
+###: Nếu cần validation thì bổ sung thêm
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-validation</artifactId>
+</dependency>
+
+
+### lưu ý phiên bản cài spring boot mới sẽ dùng jarkatar
+nên các @NotEmpty
+import javax.validation.constraints.NotEmpty;
+
+sẽ chuyen sang
+import jakarta.validation.constraints.NotEmpty;
+
+
+
+

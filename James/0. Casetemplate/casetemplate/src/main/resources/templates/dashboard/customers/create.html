@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Dashboard 1 | Zircos - Responsive Bootstrap 4 Admin Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Responsive bootstrap 4 admin template" name="description">
+    <meta content="Coderthemes" name="author">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <th:block th:replace="/dashboard/layout/css_head::css_head"></th:block>
+</head>
+
+<body data-layout="horizontal">
+
+<!-- Begin page -->
+<div id="wrapper">
+
+    <!-- Navigation Bar-->
+    <th:block th:replace="/dashboard/layout/top_nav::top_nav"></th:block>
+    <!-- End Navigation Bar-->
+
+    <!-- ============================================================== -->
+    <!-- Start Page Content here -->
+    <!-- ============================================================== -->
+
+    <div class="content-page">
+        <div class="content">
+
+            <!-- Start Content-->
+            <div class="container-fluid">
+
+                <!-- start page title -->
+                <div class="row">
+                    <form class="col-6 offset-3" th:object="${customer}" method="post" th:action="@{/customers/update}">
+                        <div class="form-group mb-3">
+                            <label>Fullname</label>
+                            <input type="text" class="form-control" placeholder="Fullname" th:field="*{name}" />
+                            <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">
+                                Please choose a username.
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Email</label>
+                            <input type="text" class="form-control" placeholder="Email..."  th:field="*{email}"/>
+                            <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                                Please choose a username.
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Address</label>
+                            <input type="text" class="form-control" placeholder="Address..." th:field="*{address}" />
+                            <div th:if="${#fields.hasErrors('address')}" th:errors="*{address}">
+                                Please choose a username.
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label>Customer type:</label>
+                            <select th:field="*{customerType.id}" class="form-control">
+                                <option th:each="ct : ${customerTypes}" th:value="${ct.id}" th:text="${ct.name}"></option>
+                            </select>
+                            <div th:if="${#fields.hasErrors('customerType')}" th:errors="*{customerType}">
+                                Please choose a username.
+                            </div>
+                        </div>
+                        <div class="form-group mb-3">
+                            <button class="btn btn-success">Create</button>
+                            <button class="btn btn-dark">Back</button>
+                        </div>
+                    </form>
+                </div>
+                <!-- end page title -->
+
+
+            </div>
+            <!-- end container-fluid -->
+
+        </div>
+        <!-- end content -->
+
+
+
+        <!-- Footer Start -->
+        <footer class="footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        2018 - 2020 &copy; Zircos theme by <a href="">Coderthemes</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- end Footer -->
+
+    </div>
+
+    <!-- ============================================================== -->
+    <!-- End Page content -->
+    <!-- ============================================================== -->
+
+</div>
+<!-- END wrapper -->
+
+<th:block th:replace="/dashboard/layout/right_bar::right_bar"></th:block>
+
+<th:block th:replace="~{dashboard/layout/js_footer::css_footer(1,'customers.list')}"></th:block>
+
+</body>
+
+</html>
