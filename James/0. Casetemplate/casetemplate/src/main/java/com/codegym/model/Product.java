@@ -21,6 +21,7 @@ public class Product {
     private String description;
     private Double price;
 
+
     @Column(name = "created_at", nullable = true)
     private Instant createAt;
     @Column(name = "deleted_at", nullable = true)
