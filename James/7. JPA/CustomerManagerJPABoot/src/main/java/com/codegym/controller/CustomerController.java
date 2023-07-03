@@ -4,6 +4,10 @@ import com.codegym.model.Customer;
 import com.codegym.model.CustomerType;
 import com.codegym.repository.CustomerRepository;
 import com.codegym.service.*;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Service;
@@ -11,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
@@ -23,13 +28,18 @@ public class CustomerController {
     private ICustomerService customerService;
     @Autowired
     private ICustomerTypeService customerTypeService;
+    @Autowired
+    private HttpSession httpSession;
 
     // Cách sử dụng model Attributes
     @GetMapping("")
-    public String index(Model model) {
+    public String index(Model model, HttpServletRequest request) {
 
         List<Customer> list = customerService.findAll();
         model.addAttribute("customers", list);
+
+        RequestContextHolder.currentRequestAttributes().getSessionId();
+        readCookies(request.getCookies());
         return "views/index";
     }
 
@@ -41,7 +51,8 @@ public class CustomerController {
 
 
     @GetMapping("/create")
-    public String create(Model model) {
+    public String create(Model model, HttpServletRequest request) {
+        readCookies(request.getCookies());
         model.addAttribute("customer", new Customer());
 
         return "views/create";
@@ -59,11 +70,27 @@ public class CustomerController {
         return "views/create";
     }
     @GetMapping("/{id}/edit")
-    public String edit(@PathVariable Long id, Model model) {
+    public String edit(@PathVariable Long id, Model model, HttpServletRequest request, HttpServletResponse response) {
         model.addAttribute("customer", customerService.findById(id));
+
+
+        RequestContextHolder.currentRequestAttributes().getSessionId();
+        readCookies(request.getCookies());
+
+        Cookie cookie = new Cookie("token-id", RequestContextHolder.currentRequestAttributes().getSessionId());
+        cookie.setMaxAge(60*5); // expires in 7 days
+        cookie.setPath("/");
+        response.addCookie(cookie);
         return "views/edit";
     }
+    public void readCookies(Cookie[] cookies) {
+        if (cookies != null) {
+            for (Cookie c : cookies) {
+                System.out.println(c.getName() + " -- " + c.getValue());
+            }
+        }
 
+    }
     @PostMapping("/update")
     public String update(@Validated @ModelAttribute Customer customer,BindingResult bindingResult, RedirectAttributes redirect) {
         if (bindingResult.hasErrors()) {

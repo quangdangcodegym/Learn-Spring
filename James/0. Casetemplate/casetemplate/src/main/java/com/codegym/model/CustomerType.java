@@ -1,11 +1,13 @@
 package com.codegym.model;
 
 import jakarta.persistence.*;
+import lombok.experimental.Accessors;
 
 import java.util.List;
 
 @Entity
 @Table(name = "customer_types")
+@Accessors(chain = true)
 public class CustomerType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
