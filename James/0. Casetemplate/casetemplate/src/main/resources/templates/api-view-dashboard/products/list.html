@@ -1,0 +1,433 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <title>Dashboard 1 | Zircos - Responsive Bootstrap 4 Admin Dashboard</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta content="Responsive bootstrap 4 admin template" name="description">
+        <meta content="Coderthemes" name="author">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <th:block th:replace="/dashboard/layout/css_head::css_head"></th:block>
+    </head>
+
+    <body data-layout="horizontal">
+
+        <!-- Begin page -->
+        <div id="wrapper">
+
+            <!-- Navigation Bar-->
+                <th:block th:replace="/dashboard/layout/top_nav::top_nav"></th:block>
+                <!-- End Navigation Bar-->
+
+            <!-- ============================================================== -->
+            <!-- Start Page Content here -->
+            <!-- ============================================================== -->
+
+            <div class="content-page">
+                <div class="content">
+
+                    <!-- Start Content-->
+                    <div class="container-fluid">
+
+                        <div class="d-flex justify-content-end">
+                            <button type="button" class="btn btn-primary" id="frm-btn-create">Create</button>
+                        </div>
+                        <!-- start page title -->
+                        <div class="row">
+                            <table class="table table-hover table-centered m-0">
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>User Name</th>
+                                    <th>Email</th>
+                                    <th>Address</th>
+                                    <th>Action</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tb-products">
+<!--                                <tr th:each="p : ${products}" >-->
+<!--                                    <th>-->
+<!--                                        <img src="/dashboard/assets\images\users\avatar-1.jpg" alt="user" class="avatar-sm rounded-circle">-->
+<!--                                    </th>-->
+<!--                                    <td th:text="${p.getName()}"></td>-->
+<!--                                    <td th:text="${p.getDescription()}">+12 3456 789</td>-->
+<!--                                    <td th:text="${p.getColor().getName()}">USA</td>-->
+<!--                                    <td>-->
+<!--                                        <a th:href="@{/customers/{id}/edit(id=${p.getId()})}"><i class="ion ion-md-build"></i></a>-->
+<!--                                        <a th:href="@{/customers/__${p.getId()}__/delete}"><i class="ion ion-md-trash"></i></a>-->
+
+<!--                                    </td>-->
+<!--                                </tr>-->
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- end page title -->
+
+
+                    </div>
+                    <!-- end container-fluid -->
+
+                </div>
+                <!-- end content -->
+
+                
+
+                <!-- Footer Start -->
+                <footer class="footer">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                2018 - 2020 &copy; Zircos theme by <a href="">Coderthemes</a>
+                            </div>
+                        </div>
+                    </div>
+                </footer>
+                <!-- end Footer -->
+
+            </div>
+
+            <!-- ============================================================== -->
+            <!-- End Page content -->
+            <!-- ============================================================== -->
+
+        </div>
+        <!-- END wrapper -->
+
+        <th:block th:replace="/dashboard/layout/right_bar::right_bar"></th:block>
+
+        <th:block th:replace="~{dashboard/layout/js_footer::css_footer(1,'customers.list')}"></th:block>
+
+        <div id="exampleModal" class="modal" >
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                        <h4 class="modal-title">Modal Heading</h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label>FullName: </label>
+                                <input type="text" name="frm-name" id="frm-name" placeholder="Enter name" class="form-control" />
+                            </div>
+                            <div class="form-group col-6">
+                                <label>Description: </label>
+                                <input type="text" name="frm-description" id="frm-description" placeholder="Enter address" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label>Size: </label>
+                                <select class="form-control" name="size" id="frm-size">
+                                </select>
+                            </div>
+                            <div class="form-group col-6">
+                                <label>Color: </label>
+                                <select class="form-control" name="color" id="frm-color">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label>Image: </label>
+                                <div>
+                                    <input class="form-control" type="text" name="" id="frm-image" />
+                                </div>
+
+                            </div>
+                            <div class="form-group col-6">
+                                <label>Price: </label>
+                                <div>
+                                    <input class="form-control" type="text" name="" id="frm-price" />
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                        <button type="button" id="frm-btn-action" class="btn btn-primary" data-dismiss="modal">Save</button>
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <script th:inline="javascript">
+            // const customers = [[${products}]];
+
+            let product = {};
+            // rederProducts();
+            /**
+             $.ajax({
+                    url: "http://localhost:8080/api/products",
+                    method: "GET",
+                    header: {
+                        contentType: 'application/json'
+                    }
+                }).done(function (data, txtStatus, e){
+                    console.log("done", data);
+                    console.log("done", txtStatus);
+                    console.log("done", e)
+                }).then(function (data, txtStatus, e){
+                    console.log("then", data);
+                    console.log("then", txtStatus);
+                    console.log("then", e);
+                    return $.ajax({
+                        url: "http://localhost:8080/api/products",
+                        method: "GET",
+                        header: {
+                            contentType: 'application/json'
+                        }
+                    })
+                }).then(function (data, txtStatus, e){
+                    console.log("then1", data);
+                    console.log("then1", txtStatus);
+                    console.log("then1", e);
+                })
+             **/
+
+
+            function initFormEvent() {
+                $("#frm-btn-create").on("click", function (){
+                    $("#frm-btn-action").text("Create");
+                    $("#frm-btn-action").prop("onclick", null).off("click");
+
+                    $("#frm-btn-action").on("click", function (){
+                        getCustomerInfoFromHtml(product);
+                        saveProduct(product);
+
+                    })
+                    $("#exampleModal").modal('show');
+                });
+            }
+            function getCustomerInfoFromHtml(product){
+                product.name = $("#frm-name").val();
+                product.description =  $("#frm-description").val();
+                product.size =  $("#frm-size").val();
+                product.color =  $("#frm-color").val();
+                product.image =  $("#frm-image").val();
+                product.price =  $("#frm-price").val();
+            }
+
+            function setCustomerInfoToHtml(product){
+                $("#frm-name").val(product.name);
+                $("#frm-description").val(product.description);
+                $("#frm-size").val(product.size);
+                $("#frm-color").val(product.color);
+                $("#frm-image").val(product.image);
+                $("#frm-price").val(product.price);
+            }
+
+            function resetHtmlForm(){
+                $("#frm-name").val("");
+                $("#frm-description").val("");
+                $("#frm-image").val("");
+                $("#frm-price").val("");
+                getAllColors(null);
+                getAllSizes(null);
+            }
+            function renderProducts(products){
+                products.forEach((value, index)=>{
+                    let strTr = `
+                    <tr >
+                                    <th>
+                                        <img src="/dashboard/assets\\images\\users\\avatar-1.jpg" alt="user" class="avatar-sm rounded-circle">
+                                    </th>
+                                    <td>${value.name}</td>
+                                    <td>${value.description}</td>
+                                    <td>${value.color}</td>
+                                    <td>
+                                        <a><i class="ion ion-md-build" data-id="${value.id}"></i></a>
+                                        <a><i class="ion ion-md-trash" data-id="${value.id}"></i></a>
+
+                                    </td>
+                                </tr>
+                `;
+                    $("#tb-products").prepend(strTr);
+                })
+
+            }
+
+            function initProductsEvent() {
+                $("td .ion-md-trash").on("click", function (e){
+                    let id = $(this).data( "id" );
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "Bạn có muốn xóa sản phẩm",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Yes, delete it!'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            deleteProduct(id);
+                        }
+                    })
+
+                })
+                $("td .ion-md-build").on("click", function (e){
+                    let id = $(this).data( "id" );
+                    findProduct(id);
+                })
+            }
+            function deleteProduct(idProduct){
+                $.ajax({
+                    url: "http://localhost:8080/api/products",
+                    method: "DELETE",
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    data: JSON.stringify({
+                        "id": idProduct
+                    })
+                }).done(function (data){
+                    let idStr = ".ion-md-trash[data-id=" + idProduct + "]";
+                    $(idStr).parent().parent().parent().remove();
+                }).then(function(data){
+                    console.log(data);
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Xóa thành công',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }).fail(function (e){
+                    console.log(e)
+                })
+            }
+
+            function findProduct(idProduct){
+                $.ajax({
+                    url: "http://localhost:8080/api/products/" + idProduct,
+                    method: "GET",
+                    headers:{
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                }).done(function (productData){
+                        setCustomerInfoToHtml(productData)
+
+                        $("#frm-btn-action").text("Save");
+                        $("#frm-btn-action").prop("onclick", null).off("click");
+                        $("#frm-btn-action").on("click", function(){
+                            getCustomerInfoFromHtml(product);
+                            updateCustomer(idProduct, product);
+                        })
+                        $("#exampleModal").modal('show');
+                })
+            }
+            function saveProduct(product) {
+                // console.log(JSON.stringify(customer));
+                $.ajax({
+                    url: "http://localhost:8080/api/products",
+                    method: "POST",
+                    headers:{
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    data: JSON.stringify(product)
+                }).done(function (data){
+                    getAllProducts();
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Thêm thành công',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }).fail(function (data){
+                    console.log(data)
+                })
+            }
+            function updateCustomer(id, product) {
+                product.id = id;
+                console.log("updateCustomer data" , product);
+                $.ajax({
+                    url: "http://localhost:8080/api/products",
+                    method: "PUT",
+                    headers:{
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    data: JSON.stringify(product)
+                }).done(function (data){
+                    // console.log("updateCustomer done" , data);
+                    getAllProducts();
+                    resetHtmlForm();
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Cập nhật thành công',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }).fail(function (data){
+                    // console.log("updateCustomer fail" , data);
+                })
+            }
+            function getAllProducts(){
+
+
+                $.ajax({
+                    url: "http://localhost:8080/api/products",
+                    method: "GET",
+                    headers: {
+                        contentType: 'application/json'
+                    }
+                }).done(function(data){
+                    renderProducts(data);
+                    initProductsEvent();
+                })
+            }
+
+
+            function getAllColors(colorSelected){
+                $.ajax({
+                    url: "http://localhost:8080/api/colors",
+                    method: "GET",
+                    headers: {
+                        "Content-Type": 'application/json'
+                    }
+                }).done(function (data){
+                    $("#frm-color").empty();
+                    $.each(data, function (index, value){
+                        $("#frm-color").append(`<option ${colorSelected != null ? "selected" : ""}>${value}</option>`)
+                    });
+                })
+            }
+            function getAllSizes(sizeSelected){
+                $.ajax({
+                    url: "http://localhost:8080/api/sizes",
+                    method: "GET",
+                    headers: {
+                        "Content-Type": 'application/json'
+                    }
+                }).done(function (data){
+                    $("#frm-size").empty();
+                    $.each(data, function (index, value){
+                        $("#frm-size").append(`<option ${sizeSelected != null ? "selected" : ""}>${value}</option>`)
+                    });
+                })
+            }
+
+            $(function() {
+                initFormEvent();
+                getAllColors(null);
+                getAllSizes(null);
+                getAllProducts();
+            })
+        </script>
+    </body>
+</html>
