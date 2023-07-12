@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 
 import java.util.Arrays;
 import java.util.List;
-
+// Có người khác cũng sửa dòng này
 @Getter
 @Setter
 public class ApiError {
