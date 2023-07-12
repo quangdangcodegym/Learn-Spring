@@ -9,10 +9,7 @@ import com.codegym.model.Product;
 import com.codegym.repository.CartItemRepository;
 import com.codegym.repository.CartRepository;
 import com.codegym.repository.ProductRepository;
-import com.codegym.utils.CookieUtils;
-import jakarta.servlet.http.Cookie;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -83,6 +80,9 @@ public class CartService implements ICartService{
         Cart cart = cartRepository.findById(id).get();
 
         CartDTO cartDTO = mapperUtils.toCartDTO(cart);
+        cartDTO.getCartItemsDTOS().stream().forEach(cartItemsDTO -> {
+            cartItemsDTO.setProductDTO(mapperUtils.toProductDTO(productRepository.findById(cartItemsDTO.getProductId()).get()));
+        });
         return cartDTO;
     }
 
@@ -110,25 +110,15 @@ public class CartService implements ICartService{
     }
 
     @Override
-    public Cart addToCart(Long idProduct, BigDecimal price, int quantity, HttpServletResponse response, HttpServletRequest request) {
-        Cookie [] cookies = request.getCookies();
+    public Long addToCart(Long idProduct, BigDecimal price, int quantity, String tokenId) {
+
 
         Product product = productRepository.findById(idProduct).get();
 
-        Cart cartDB = cartRepository.findByTokenIdContaining(CookieUtils.getCookieValueByName("token-id", cookies));
+        Cart cartDB = cartRepository.findByTokenIdContaining(tokenId);
         if (cartDB == null) {
-            boolean check = CookieUtils.checkCookiesByName("token-id", cookies);
-            LocalDateTime now = LocalDateTime.now();
-            if (check == false) {
-                now.plusMinutes(5);         // cộng thêm 1 phút
-                Cookie cookie = new Cookie("token-id", RequestContextHolder.currentRequestAttributes().getSessionId());
-                // RequestContextHolder.currentRequestAttributes().getSessionId(): ở bước này server tạo sessionid và gửi về client
-                cookie.setMaxAge(60*30); // expires in 7 days
-                cookie.setPath("/");
-                response.addCookie(cookie);
-            }
             Cart cart = new Cart();
-            cart.setExpiratedDate(now);
+            cart.setExpiratedDate(LocalDateTime.now());
             cart.setTokenId(RequestContextHolder.currentRequestAttributes().getSessionId());
             cartDB = cartRepository.save(cart);
         }
@@ -145,11 +135,12 @@ public class CartService implements ICartService{
                 updateCart(cartItems, product, price, quantity);
             }
         }
-
+        cartDB.setCartItems(cartItems);
         cartItemRepository.saveAll(cartItems);
-        cartDB = cartRepository.findById(cartDB.getId()).get();
-        cartDB.getCartItems();
-        return cartDB;
+        cartRepository.save(cartDB);
+
+        Cart cart = cartRepository.findById(cartDB.getId()).get();
+        return cartDB.getId();
     }
 
     public boolean checkProductExists(Cart cart, Product product) {

@@ -24,6 +24,6 @@ public class CartDTO {
     private Long userId;
     private LocalDateTime expiratedDate;
 
-    List<CartItemsDTO> cartItemsDTOS;
+    List<CartItemDTO> cartItems;
 
 }

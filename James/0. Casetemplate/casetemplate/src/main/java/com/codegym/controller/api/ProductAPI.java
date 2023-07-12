@@ -2,15 +2,15 @@ package com.codegym.api;
 
 import com.codegym.dto.CartDTO;
 import com.codegym.dto.ProductDTO;
+import com.codegym.model.Product;
 import com.codegym.service.ICartService;
 import com.codegym.service.IProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,6 +27,12 @@ public class ProductAPI {
         List<ProductDTO> productDTOs = iProductService.findAllProductDTOs();
 
         return new ResponseEntity<>(productDTOs, HttpStatus.OK);
+    }
+
+    @PostMapping("/create/{id}")
+    public ResponseEntity<?> saveProduct(@Validated @RequestBody Product product, @PathVariable Long id){
+        iProductService.save(product);
+        return new ResponseEntity<>("OK", HttpStatus.OK);
     }
 
 

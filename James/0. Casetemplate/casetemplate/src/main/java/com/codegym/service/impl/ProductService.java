@@ -39,6 +39,12 @@ public class ProductService implements IProductService{
     }
 
     @Override
+    public ProductDTO findProductDTOByID(Long id) {
+        Product product = productRepository.findById(id).get();
+        return mapperUtils.toProductDTO(product);
+    }
+
+    @Override
     public void update(Long id, Product product) {
         product.setId(id);
         productRepository.save(product);

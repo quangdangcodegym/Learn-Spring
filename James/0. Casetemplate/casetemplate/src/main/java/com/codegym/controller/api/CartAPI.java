@@ -2,9 +2,9 @@ package com.codegym.api;
 
 import com.codegym.dto.CartDTO;
 import com.codegym.service.ICartService;
-import com.codegym.testmodelmapper.Game;
-import com.codegym.testmodelmapper.GameDTO;
-import com.codegym.testmodelmapper.Player;
+import com.codegym.test.testmodelmapper.Game;
+import com.codegym.test.testmodelmapper.GameDTO;
+import com.codegym.test.testmodelmapper.Player;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;

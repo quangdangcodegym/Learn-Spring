@@ -12,13 +12,10 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @Accessors(chain = true)
-public class CartItemsDTO {
+public class CartItemDTO {
     private Long id;
     private BigDecimal price;
     private Integer quantity;
-    private Long cartId;
-    private CartDTO cartDTO;
-    private Long productId;
-    private ProductDTO productDTO;
+    private ProductDTO product;
 
 }
