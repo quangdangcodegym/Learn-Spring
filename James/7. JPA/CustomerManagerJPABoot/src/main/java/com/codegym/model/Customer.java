@@ -30,7 +30,7 @@ public class Customer implements Validator {
 
 //    @Validated            để Validated là sai, vì validated chỉ kích hoạt validate ở Controller
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "customer_type", referencedColumnName = "id", nullable = false)
     private CustomerType customerType;
 

@@ -1,11 +1,10 @@
-package com.codegym.service;
+package com.codegym.service.impl;
 
-import com.codegym.dto.CartItemsDTO;
+import com.codegym.model.dto.CartItemDTO;
 import com.codegym.mapper.MapperUtils;
-import com.codegym.model.Cart;
 import com.codegym.model.CartItem;
 import com.codegym.repository.CartItemRepository;
-import com.codegym.repository.CartRepository;
+import com.codegym.service.ICartItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,7 +13,7 @@ import java.util.List;
 
 @Service
 @Transactional
-public class CartItemService implements ICartItemService{
+public class CartItemService implements ICartItemService {
 
     @Autowired
     private CartItemRepository cartItemRepository;
@@ -36,9 +35,9 @@ public class CartItemService implements ICartItemService{
     }
 
     @Override
-    public CartItemsDTO findCartItemsDTOById(Long id) {
+    public CartItemDTO findCartItemsDTOById(Long id) {
         CartItem cartItem = cartItemRepository.findById(id).get();
-        CartItemsDTO cartItemsDTO = mapperUtils.toCartItemDTO(cartItem);
+        CartItemDTO cartItemsDTO = mapperUtils.toCartItemDTO(cartItem);
         return cartItemsDTO;
     }
 

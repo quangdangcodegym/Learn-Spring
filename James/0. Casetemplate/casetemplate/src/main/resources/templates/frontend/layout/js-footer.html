@@ -9,4 +9,20 @@
 <script src="/frontend/assets\js\ajax-mail.js"></script>
 <script src="/frontend/assets\js\plugins.js"></script>
 <script src="/frontend/assets\js\main.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.12/sweetalert2.min.js" integrity="sha512-JbRQ4jMeFl9Iem8w6WYJDcWQYNCEHP/LpOA11LaqnbJgDV6Y8oNB9Fx5Ekc5O37SwhgnNJdmnasdwiEdvMjW2Q=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.7.12/sweetalert2.css" integrity="sha512-K0TEY7Pji02TnO4NY04f+IU66vsp8z3ecHoID7y0FSVRJHdlaLp/TkhS5WDL3OygMkVns4bz0/ah4j8M3GgguA=="
+          crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script th:inline="javascript">
+        function handleOnChangePrice(idProduct, elePrice){
+            //window.location.assign("https://developer.mozilla.org/en-US/docs/Web/API/Location/reload");
+            let priceNew = +elePrice.value;
+            if(priceNew.value == 0){
+                alert("Gia khong hop le");
+                return;
+            }
+            let str = "/cart/" + idProduct + "/update/" + priceNew ;
+            window.location.assign(str);
+        }
+    </script>
 </th:block>

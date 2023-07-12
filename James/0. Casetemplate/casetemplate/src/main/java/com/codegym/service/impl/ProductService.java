@@ -1,9 +1,10 @@
-package com.codegym.service;
+package com.codegym.service.impl;
 
-import com.codegym.dto.ProductDTO;
+import com.codegym.model.dto.ProductDTO;
 import com.codegym.mapper.MapperUtils;
 import com.codegym.model.Product;
 import com.codegym.repository.ProductRepository;
+import com.codegym.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class ProductService implements IProductService{
+public class ProductService implements IProductService {
 
     @Autowired
     private ProductRepository productRepository;
@@ -53,6 +54,6 @@ public class ProductService implements IProductService{
     @Override
     public void remove(Long id) {
         Product product = productRepository.findById(id).get();
-        productRepository.save(product);
+        productRepository.delete(product);
     }
 }

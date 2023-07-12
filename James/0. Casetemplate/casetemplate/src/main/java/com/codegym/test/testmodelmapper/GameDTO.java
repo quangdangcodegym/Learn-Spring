@@ -1,4 +1,4 @@
-package com.codegym.testmodelmapper;
+package com.codegym.test.testmodelmapper;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

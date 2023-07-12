@@ -13,3 +13,9 @@
 
 
 ###
+Mặc định Spring sẽ tự động lấy tất cả FETCH lazy
+Sử dụng #spring.jpa.open-in-view = false để chăn lại FETCH LAZY SẼ HOẠT ĐỘNG
+
+###
+FETCH LAZY: có thể lấy được trong 1 transactional (ở tầng SERVICE), khi qua tầng controller ko có transactional thì ko thể
+lấy mấytruwouong LAZY Được

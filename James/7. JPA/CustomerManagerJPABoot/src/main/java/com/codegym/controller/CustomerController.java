@@ -36,6 +36,7 @@ public class CustomerController {
     public String index(Model model, HttpServletRequest request) {
 
         List<Customer> list = customerService.findAll();
+        list.stream().forEach(customer -> System.out.println(customer.getCustomerType().getName()));
         model.addAttribute("customers", list);
 
         RequestContextHolder.currentRequestAttributes().getSessionId();
@@ -46,7 +47,8 @@ public class CustomerController {
     @ModelAttribute("customerTypes")
     public Iterable<CustomerType> getAllCustomerTypes() {
         System.out.println("Tạo modelAttribute");
-        return customerTypeService.findAll();
+        List<CustomerType> customerTypes = customerTypeService.findAll();
+        return customerTypes;
     }
 
 

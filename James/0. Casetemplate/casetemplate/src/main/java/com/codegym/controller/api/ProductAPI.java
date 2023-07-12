@@ -1,11 +1,8 @@
-package com.codegym.api;
+package com.codegym.controller.api;
 
-import com.codegym.dto.CartDTO;
-import com.codegym.dto.ProductDTO;
+import com.codegym.model.dto.ProductDTO;
 import com.codegym.model.Product;
-import com.codegym.service.ICartService;
 import com.codegym.service.IProductService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,12 +25,28 @@ public class ProductAPI {
 
         return new ResponseEntity<>(productDTOs, HttpStatus.OK);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findProduct(@PathVariable Long id) {
+        ProductDTO productDTO = iProductService.findProductDTOByID(id);
 
-    @PostMapping("/create/{id}")
-    public ResponseEntity<?> saveProduct(@Validated @RequestBody Product product, @PathVariable Long id){
-        iProductService.save(product);
-        return new ResponseEntity<>("OK", HttpStatus.OK);
+        return new ResponseEntity<>(productDTO, HttpStatus.OK);
     }
 
+    @PostMapping("")
+    public ResponseEntity<?> saveProduct( @RequestBody Product product){
+        iProductService.save(product);
+        return ResponseEntity.noContent().build();
+    }
+    @PutMapping("")
+    public ResponseEntity<?> updateProduct( @RequestBody Product product){
+        iProductService.update(product.getId(),product);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> deleteProduct(@Validated @RequestBody Product product){
+        iProductService.remove(product.getId());
+        return ResponseEntity.noContent().build();
+    }
 
 }

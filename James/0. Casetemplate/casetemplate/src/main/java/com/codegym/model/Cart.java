@@ -1,6 +1,6 @@
 package com.codegym.model;
 
-import com.codegym.dto.CartDTO;
+import com.codegym.model.dto.CartDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -40,7 +40,7 @@ public class Cart {
     private LocalDateTime expiratedDate;
 
 
-    @OneToMany(mappedBy = "cart")
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
     List<CartItem> cartItems;
 
 

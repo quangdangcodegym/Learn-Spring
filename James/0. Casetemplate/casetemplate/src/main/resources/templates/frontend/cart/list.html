@@ -52,6 +52,20 @@
                         <div class="col-12">
                             <div class="table_desc">
                                 <div class="cart_page table-responsive">
+                                    <th:block th:if="${message !=null}">
+                                        <script th:inline="javascript">
+                                            console.log("aaaaaaaaaa")
+                                            /*<![CDATA[*/
+                                            window.onload = ()=>{
+                                                Swal.fire({
+                                                    icon: 'error',
+                                                    title: 'Oops...',
+                                                    text: [[${message}]]
+                                                })
+                                            }
+                                            /*]]>*/
+                                        </script>
+                                    </th:block>
                                     <table>
                                         <thead>
                                         <tr>
@@ -60,17 +74,17 @@
                                             <th class="product_name">Product</th>
                                             <th class="product-price">Price</th>
                                             <th class="product_quantity">Quantity</th>
-                                            <th class="product_total">Total</th>
+                                            <th class="product_total">Total11</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <th:block th:if="${cart!=null}">
                                             <tr th:each="ci : ${cart.getCartItems()}">
                                                 <td class="product_remove"><a href="#"><i class="fa fa-trash-o"></i></a></td>
-                                                <td class="product_thumb"><a href="#"><img src="assets\img\cart\cart17.jpg" alt=""></a></td>
+                                                <td class="product_thumb"><a ><img src="assets\img\cart\cart17.jpg" alt=""></a></td>
                                                 <td class="product_name"><a href="#" th:text="${ci.getProduct().getName()}">Handbag fringilla</a></td>
                                                 <td class="product-price" th:text="${ci.getProduct().getPrice()}">£65.00</td>
-                                                <td class="product_quantity"><input min="0" max="100" value="1" type="number" th:value="${ci.getQuantity()}"></td>
+                                                <td class="product_quantity"><input th:onchange="handleOnChangePrice([[${ci.getProduct.getId()}]], this)" min="0" max="100" value="1" type="number" th:value="${ci.getQuantity()}"></td>
                                                 <td class="product_total" th:text="${ci.getQuantity()*ci.getPrice()}">£130.00</td>
                                             </tr>
                                         </th:block>

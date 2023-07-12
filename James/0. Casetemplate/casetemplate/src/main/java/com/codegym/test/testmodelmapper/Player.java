@@ -1,4 +1,4 @@
-package com.codegym.testmodelmapper;
+package com.codegym.test.testmodelmapper;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;

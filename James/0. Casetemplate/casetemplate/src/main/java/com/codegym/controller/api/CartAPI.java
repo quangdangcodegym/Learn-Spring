@@ -1,19 +1,18 @@
-package com.codegym.api;
+package com.codegym.controller.api;
 
-import com.codegym.dto.CartDTO;
+import com.codegym.model.dto.api.CartApiResDTO;
+import com.codegym.model.dto.api.CartItemApiReqDTO;
+import com.codegym.exception.NumberInputException;
+import com.codegym.model.Cart;
 import com.codegym.service.ICartService;
-import com.codegym.test.testmodelmapper.Game;
-import com.codegym.test.testmodelmapper.GameDTO;
-import com.codegym.test.testmodelmapper.Player;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeMap;
+import com.codegym.utils.AppUtils;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/carts")
@@ -21,26 +20,28 @@ public class CartAPI {
     @Autowired
     private ICartService iCartService ;
 
-    @GetMapping("{id}")
-    public ResponseEntity<?> listCartDTOs(@PathVariable Long id){
-//        CartDTO cartDTO = iCartService.findCartDTOById(id);
-        CartDTO cartDTO = iCartService.findCartDTOByIdUseModelMapper(id);
-        return new ResponseEntity<>(cartDTO, HttpStatus.OK);
+    public CartAPI() {
+        System.out.println("Chay vao init");
     }
-    @GetMapping("/mapper")
-    public ResponseEntity<?> testmapper(){
-        ModelMapper modelMapper = new ModelMapper();
-        TypeMap<Game, GameDTO> propertyMapper = modelMapper.createTypeMap(Game.class, GameDTO.class);
-        // add deep mapping to flatten source's Player object into a single field in destination
-        propertyMapper.addMappings(
-                mapper -> mapper.map(src -> {
-                    return src.getCreator().getName();
-                }, GameDTO::setCreator)
-        );
-        Game game = new Game(1L, "Game 1", null);
-        game.setCreator(new Player(1L, "John"));
-        GameDTO gameDTO = modelMapper.map(game, GameDTO.class);
 
-        return new ResponseEntity<>(gameDTO, HttpStatus.OK);
+    @GetMapping("/{id}")
+    public ResponseEntity<?> listCartDTOs(@PathVariable Long id){
+        CartApiResDTO cartApiResDTO = iCartService.findCartApiResDTO(id);
+        return new ResponseEntity<>(cartApiResDTO, HttpStatus.OK);
+    }
+
+    @PostMapping("")
+    public ResponseEntity<?> addProductToCart(@RequestBody CartItemApiReqDTO cartItemApiReqDTO, HttpServletRequest request, HttpServletResponse response) throws NumberInputException {
+        Cart cart = iCartService.addProductToCart(cartItemApiReqDTO.getProduct().getId(), 1, AppUtils.TYPE_API, request, response);
+        CartApiResDTO cartApiResDTO = iCartService.findCartApiResDTO(cart.getId());
+        return new ResponseEntity<>(cartApiResDTO, HttpStatus.OK);
+    }
+    @PutMapping("")
+    public ResponseEntity<?> updateProductInCart(@RequestBody CartItemApiReqDTO cartItemApiReqDTO, BindingResult bindingResult,
+                                                 HttpServletRequest request, HttpServletResponse response) throws NumberInputException{
+
+        Cart cart = iCartService.updateProductInCart(cartItemApiReqDTO.getProduct().getId(), cartItemApiReqDTO.getQuantity(), AppUtils.TYPE_API, request, response);
+        CartApiResDTO cartApiResDTO = iCartService.findCartApiResDTO(cart.getId());
+        return new ResponseEntity<>(cartApiResDTO, HttpStatus.OK);
     }
 }

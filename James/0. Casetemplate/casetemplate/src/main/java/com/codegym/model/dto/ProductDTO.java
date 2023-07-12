@@ -1,4 +1,4 @@
-package com.codegym.dto;
+package com.codegym.model.dto;
 
 import com.codegym.model.EColor;
 import com.codegym.model.ESize;

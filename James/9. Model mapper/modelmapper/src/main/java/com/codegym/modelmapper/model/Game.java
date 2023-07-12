@@ -1,4 +1,4 @@
-package com.codegym.testmodelmapper;
+package com.codegym.modelmapper.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,5 +12,5 @@ import lombok.Setter;
 public class Game {
     private Long id;
     private String name;
-    private Player creator;
+    private String creator;
 }

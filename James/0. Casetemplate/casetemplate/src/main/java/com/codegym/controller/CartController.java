@@ -1,11 +1,12 @@
 package com.codegym.controller;
 
-import com.codegym.config.Config;
+import com.codegym.exception.NumberInputException;
+import com.codegym.exception.NumberInputExceptionWeb;
 import com.codegym.model.Cart;
-import com.codegym.model.Product;
 import com.codegym.service.ICartItemService;
 import com.codegym.service.ICartService;
 import com.codegym.service.IProductService;
+import com.codegym.utils.AppUtils;
 import com.codegym.utils.CookieUtils;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,12 +16,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.RequestContextHolder;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Controller
+@RequestMapping("/cart")
 public class CartController {
     @Autowired
     private ICartService iCartService;
@@ -30,7 +32,7 @@ public class CartController {
     @Autowired
     private IProductService iProductService;
 
-    @GetMapping("/cart")
+    @GetMapping("")
     public String index(Model model, HttpServletRequest request) {
         Cookie [] cookies = request.getCookies();
         Cart cartDB = iCartService.findByTokenIdContaining(CookieUtils.getCookieValueByName("token-id", cookies));
@@ -41,16 +43,27 @@ public class CartController {
         return "frontend/cart/list";
     }
 
+    @GetMapping("/{id}/add")
+    public String addCart(@PathVariable Long id, Model model,HttpServletResponse response, HttpServletRequest request) throws NumberInputException {
+
+        /** Nếu dùng try/catch để xử lý ngoại lệ làm cho chỗ này phải xử lý 2 việc: nên dùng global exception
+        try {
+            cart = iCartService.addProductToCart(id,cartDB, 1, tokenId);
+        } catch (NumberInputException numberInputException) {
+            model.addAttribute("message", "Số lượng sản phẩm không hợp lệ");
+        }
+         **/
+        Cart cart = iCartService.addProductToCart(id, 1, AppUtils.TYPE_WEB, request, response);
+        model.addAttribute("cart", cart);
+        return "frontend/cart/list";
+    }
 
 
+    @GetMapping("/{id}/update/{quantity}")
+    public String updateCart(@PathVariable Long id,@PathVariable int quantity, Model model,
+                             HttpServletResponse response, HttpServletRequest request) throws NumberInputException {
 
-    @GetMapping("cart/{id}/add")
-    public String addCart(@PathVariable Long id, Model model,HttpServletResponse response, HttpServletRequest request) {
-//        CookieUtils.readCookies(request.getCookies());
-        Product product = iProductService.findById(id);
-        Cart cart = iCartService.addToCart(id, product.getPrice(), 1, response, request);
-
-
+        Cart cart = iCartService.updateProductInCart(id,quantity, AppUtils.TYPE_WEB, request, response);
         model.addAttribute("cart", cart);
         return "frontend/cart/list";
     }

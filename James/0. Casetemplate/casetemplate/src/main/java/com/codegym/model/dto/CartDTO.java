@@ -1,4 +1,4 @@
-package com.codegym.dto;
+package com.codegym.model.dto;
 
 
 import lombok.AllArgsConstructor;

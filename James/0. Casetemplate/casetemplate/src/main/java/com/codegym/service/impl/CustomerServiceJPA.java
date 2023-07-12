@@ -1,7 +1,8 @@
-package com.codegym.service;
+package com.codegym.service.impl;
 
 import com.codegym.model.Customer;
 import com.codegym.repository.CustomerRepository;
+import com.codegym.service.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class CustomerServiceJPA implements ICustomerService{
+public class CustomerServiceJPA implements ICustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;

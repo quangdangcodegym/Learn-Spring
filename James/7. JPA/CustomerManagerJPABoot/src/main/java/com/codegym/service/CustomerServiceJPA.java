@@ -9,13 +9,16 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@Transactional
 public class CustomerServiceJPA implements ICustomerService{
 
     @Autowired
     private CustomerRepository customerRepository;
     @Override
     public List<Customer> findAll() {
-        return customerRepository.findAll();
+        List<Customer> customers = customerRepository.findAll();
+//        customers.stream().forEach(customer -> System.out.println(customer.getCustomerType().getName()));
+        return customers;
     }
 
     @Override

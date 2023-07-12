@@ -1,13 +1,13 @@
 package com.codegym.service;
 
-import com.codegym.dto.CartDTO;
+import com.codegym.model.dto.CartDTO;
+import com.codegym.model.dto.api.CartApiResDTO;
+import com.codegym.exception.NumberInputException;
 import com.codegym.model.Cart;
 import com.codegym.model.CartItem;
-import com.codegym.model.Product;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public interface ICartService {
@@ -18,8 +18,6 @@ public interface ICartService {
 
     CartDTO findCartDTOById(Long id);
 
-    CartDTO findCartDTOByIdUseModelMapper(Long id);
-
     void update(Long id, Cart cart);
 
     void remove(Long id);
@@ -28,5 +26,12 @@ public interface ICartService {
     List<CartItem> getCartItems(Long cardId);
 
 
-    Cart addToCart(Long idProduct, BigDecimal price, int quantity, HttpServletResponse response, HttpServletRequest request);
+
+    Cart addProductToCart(Long idProduct, int quantity, String type, HttpServletRequest request, HttpServletResponse response) throws NumberInputException;
+
+    Cart updateProductInCart(Long id, int quantity, String type, HttpServletRequest request, HttpServletResponse response) throws NumberInputException;
+
+    CartDTO findCartDTOByIdUseModelMapper(Long id);
+
+    CartApiResDTO findCartApiResDTO(Long id);
 }

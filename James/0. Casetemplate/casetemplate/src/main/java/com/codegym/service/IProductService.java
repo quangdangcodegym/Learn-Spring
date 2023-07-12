@@ -1,7 +1,7 @@
 package com.codegym.service;
 
 
-import com.codegym.dto.ProductDTO;
+import com.codegym.model.dto.ProductDTO;
 import com.codegym.model.Product;
 
 import java.util.List;
@@ -13,6 +13,8 @@ public interface IProductService {
 
     void save(Product customer);
     Product findById(Long id);
+
+    ProductDTO findProductDTOByID(Long id);
 
     void update(Long id, Product customer);
 

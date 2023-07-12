@@ -43,14 +43,14 @@
                             </div>
                         </div>
                         <div class="form-group mb-3">
-                            <label>Email</label>
+                            <label>Description</label>
                             <input type="text" class="form-control" placeholder="Description..."  th:field="*{description}"/>
                             <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}">
                                 Please choose a username.
                             </div>
                         </div>
                         <div class="form-group mb-3">
-                            <label>Address</label>
+                            <label>Price</label>
                             <input type="text" class="form-control" placeholder="Price..." th:field="*{price}" />
                             <div th:if="${#fields.hasErrors('price')}" th:errors="*{price}">
                                 Please choose a username.

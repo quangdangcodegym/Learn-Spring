@@ -1,4 +1,4 @@
-package com.codegym.testmodelmapper;
+package com.codegym.modelmapper.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,24 +7,12 @@ import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class GameDTO {
     private Long id;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     private String creator;
 
-    public Long getId() {
-        return id;
-    }
 
-    public String getCreator() {
-        return creator;
-    }
-
-    public void setCreator(String creator) {
-        this.creator = creator;
-    }
 }
