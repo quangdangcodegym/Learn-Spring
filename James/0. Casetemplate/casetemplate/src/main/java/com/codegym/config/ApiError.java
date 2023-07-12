@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 
 import java.util.Arrays;
 import java.util.List;
-
+// Có ai đó mới merge vo master
 @Getter
 @Setter
 public class ApiError {
