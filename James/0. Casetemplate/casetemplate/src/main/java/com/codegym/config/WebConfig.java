@@ -10,7 +10,7 @@ import org.springframework.format.FormatterRegistry;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-// Cấu hìnhadvavdav
+// Mới sửa
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
     @Override
