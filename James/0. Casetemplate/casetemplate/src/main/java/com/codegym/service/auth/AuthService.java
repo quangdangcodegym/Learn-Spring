@@ -57,6 +57,6 @@ public class AuthService implements UserDetailsService {
                 .orElseThrow(() -> new UsernameNotFoundException("User not Exist") );
         var role = new ArrayList<SimpleGrantedAuthority>();
         role.add(new SimpleGrantedAuthority(user.getRole().toString()));
-        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), role);
+        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), role);
     }
 }

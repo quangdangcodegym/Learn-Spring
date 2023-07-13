@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <th:block th:fragment="header-area">
   <!-- all js here -->
   <div class="header_area">
@@ -33,7 +33,12 @@
               <li><a href="wishlist.html" title="wishlist">My wishlist</a></li>
               <li><a href="my-account.html" title="My account">My account</a></li>
               <li><a href="cart.html" title="My cart">My cart</a></li>
-              <li><a href="login.html" title="Login">Login</a></li>
+              <th:block sec:authorize="isAuthenticated()">
+                <li><a href="login.html" title="Login"><span sec:authentication="name"></span></a></li>
+              </th:block>
+              <th:block sec:authorize="!isAuthenticated()">
+                <li><a href="login.html" title="Login">Login</a></li>
+              </th:block>
             </ul>
           </div>
         </div>
