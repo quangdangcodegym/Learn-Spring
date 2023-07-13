@@ -225,8 +225,10 @@
 
 
             page.elements.tbProduct = $("#tb-products");
-            page.elements.iDelete = $("td .ion-md-trash");
-            page.elements.iEdit = $("td .ion-md-build");
+            // page.elements.iconDelete = $("td .ion-md-trash");       // icon này chưa được vẽ ra nên mới đầu sẽ là NULL, ban đầu để vậy là sai
+            // page.elements.iconEdit = $("td .ion-md-build");         // icon này chưa được vẽ ra nên mới đầu sẽ là NULL
+            page.elements.iconDelete = null;
+            page.elements.iconEdit = null;
             page.elements.btnCreate = $("#frm-btn-create");
             page.elements.modalProduct = $("#exampleModal");
 
@@ -277,7 +279,7 @@
                     },
                     data: JSON.stringify(product)
                 }).done(function (data){
-                    product.commands.getAllProducts();
+                    page.commands.getAllProducts();
                     page.toast.successCRUDProduct("Thêm thành công");
                 }).fail(function (data){
                     console.log(data)
@@ -322,7 +324,7 @@
                     page.dialogs.elements.btnAction.prop("onclick", null).off("click");
                     page.dialogs.elements.btnAction.on("click", function(){
                         getCustomerInfoFromHtml(product);
-                        updateProduct(idProduct, product);
+                        page.commands.updateProduct(idProduct, product);
                     })
                     page.elements.modalProduct.modal('show');
                 })
@@ -349,7 +351,7 @@
                     confirmButtonText: 'Yes, delete it!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        deleteProduct(id);
+                        page.commands.deleteProduct(id);
                     }
                 })
             }
@@ -392,7 +394,7 @@
 
                     page.dialogs.elements.btnAction.on("click", function (){
                         getCustomerInfoFromHtml(product);
-                        saveProduct(product);
+                        page.commands.saveProduct(product);
 
                     })
                     page.elements.modalProduct.modal('show');
@@ -447,14 +449,17 @@
             }
 
             function initProductsEvent() {
-                console.log(page.elements.iDelete)
-                $("td .ion-md-trash").on("click", function (e){
+                page.elements.iconDelete = $("td .ion-md-trash");
+                page.elements.iconEdit = $("td .ion-md-build");
+
+                page.elements.iconDelete.on("click", function (e){
                     let id = $(this).data( "id" );
                     page.toast.confirmDeleteProduct(id);
 
                 })
-                $("td .ion-md-trash").on("click", function (e){
+                page.elements.iconEdit.on("click", function (e){
                     let id = $(this).data( "id" );
+                    console.log("Edit id: " + id)
                     page.commands.findProduct(id);
                 })
             }

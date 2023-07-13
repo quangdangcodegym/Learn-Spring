@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" 
+  integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js" 
+  integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+<body>
+
+<div class="container mt-3">
+  <h3>Form Validation</h3>
+  <p>Try to submit the form.</p>
+    
+  <form action="/action_page.php" class="" id="formSignUp" novalidate>
+    <div class="mb-3 mt-3">
+      <label for="uname" class="form-label">Username:</label>
+      <input type="text" class="form-control" id="uname" placeholder="Enter username" name="uname" required>
+      <div class="invalid-feedback">Please fill out this field.</div>
+    </div>
+    <div class="mb-3">
+      <label for="pwd" class="form-label">Password:</label>
+      <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd" required>
+      <div class="valid-feedback">Valid.</div>
+      <div class="invalid-feedback">Please fill out this field.</div>
+    </div>
+    <div class="form-check mb-3">
+      <input class="form-check-input" type="checkbox" id="myCheck"  name="remember" required>
+      <label class="form-check-label" for="myCheck">I agree on blabla.</label>
+      <div class="invalid-feedback">Check this checkbox to continue.</div>
+      <div class="valid-feedback">Valid.</div>
+    </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+<script>
+    $( document ).ready( function () {
+			$( "#formSignUp" ).validate( {
+                onfocusout: function (element) {
+                    $("#formSignUp").valid();
+                },
+                validClass: "success",
+				rules: {
+					firstname: "required",
+					lastname: "required",
+				},
+				messages: {
+					username: {
+						required: "Please enter a username",
+						minlength: "Your username must consist of at least 2 characters"
+					},
+					password: {
+						required: "Please provide a password",
+						minlength: "Your password must be at least 5 characters long"
+					},
+				},
+				errorElement: "div",
+				errorPlacement: function ( error, element ) {
+					// Add the `help-block` class to the error element
+					error.addClass( "invalid-feedback" );
+				},
+				// highlight: function ( element, errorClass, validClass ) {
+				// 	$( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
+				// },
+				// unhighlight: function (element, errorClass, validClass) {
+				// 	$( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
+				// }
+                showErrors: function(errorMap, errorList) {
+                    $("#formSignUp").addClass("was-validated");
+                    this.defaultShowErrors();
+                }
+			} );
+
+        });
+</script>
+
+</body>
+</html>

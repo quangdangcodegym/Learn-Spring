@@ -1,5 +1,6 @@
 package com.codegym.mapper;
 
+import com.codegym.model.User;
 import com.codegym.model.dto.CartDTO;
 import com.codegym.model.dto.CartItemDTO;
 import com.codegym.model.dto.ProductDTO;
@@ -7,6 +8,7 @@ import com.codegym.model.dto.api.CartApiResDTO;
 import com.codegym.model.Cart;
 import com.codegym.model.CartItem;
 import com.codegym.model.Product;
+import com.codegym.service.auth.request.RegisterRequest;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,11 @@ public class MapperUtils {
     }
     public CartItemDTO toCartItemDTO(CartItem cartItem){
         return modelMapper.map(cartItem, CartItemDTO.class);
+    }
+
+    public User toUser(RegisterRequest request) {
+        User user = modelMapper.map(request, User.class);
+        return user;
     }
 
 }
