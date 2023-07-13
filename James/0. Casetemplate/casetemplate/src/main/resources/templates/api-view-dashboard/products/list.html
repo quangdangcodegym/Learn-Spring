@@ -248,7 +248,6 @@
                                     <td>
                                         <a><i class="ion ion-md-build" data-id="${value.id}"></i></a>
                                         <a><i class="ion ion-md-trash" data-id="${value.id}"></i></a>
-
                                     </td>
                                 </tr>
                 `;
@@ -277,6 +276,7 @@
                 })
                 $("td .ion-md-build").on("click", function (e){
                     let id = $(this).data( "id" );
+                    console.log("Sửa item")
                     findProduct(id);
                 })
             }
